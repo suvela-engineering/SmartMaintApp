@@ -2,13 +2,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SmartMaintApi.Data;
 using SmartMaintApi.Models;
+using SmartMaintApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -29,7 +30,7 @@ builder.Services.AddIdentityCore<User>()
 
 var app = builder.Build();
 
-app.MapIdentityApi<User>();
+//app.MapIdentityApi<User>(); Creates automatically login, register, etc.
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -39,6 +40,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
+// app.UseAuthorization();
 app.MapControllers();
 app.Run();
