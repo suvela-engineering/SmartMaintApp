@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 3rem; /* Adjust padding as needed */
+  margin-left: 3rem; /* Adjust margin to create space from the navigation */
+}
+
+/* Navigation Styles (Tailwind) */
+.navigation {  /* Target the class applied to the navigation component */
+  position: fixed;
+  inset:y-0;
+  left:0; 
+  height: 100vh; /* Equivalent to h-screen */
+  width: 64px;   /* Equivalent to w-64 */
+  background-color: #272727; /* Equivalent to bg-gray-800 (assuming dark gray) */
+  color: white;  /* Equivalent to text-white */
+  display: flex;
+  justify-content: center; /* Center navigation content */
+  /*align-items: center; /* Center navigation content vertically */
+  padding: 1rem 0; /* Adjust padding as needed */
+  /*background-color: #274e13;  Dark green background */
+  color: #fff; /* White text color */
+}
+
+.navigation a {  /* Target anchor tags within the navigation */
+    display: block;  /* Make links behave like block elements for spacing */
+    padding: 0.75rem 0; /* Add top and bottom padding for spacing */
+}
+
+/* Footer Styles (Tailwind) */
+.footer {  /* Target the class applied to the footer component */
+  display: flex;
+  justify-content: center; /* Center footer content */
+  align-items: flex-end; /* Align footer content to bottom */
+  padding: 1rem 0; /* Adjust padding as needed */
+  background-color: #221a1a;;
+  color: #fff; /* White text color */
+}
