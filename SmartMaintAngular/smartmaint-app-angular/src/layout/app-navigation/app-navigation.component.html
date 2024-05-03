@@ -1,0 +1,6 @@
+<nav class="navigation">
+  <ul>
+    <li *ngFor="let link of links">
+      <a [routerLink]="link.path">{{ link.text }}</a> </li>
+  </ul>
+</nav>

@@ -5,8 +5,10 @@ AI assistant application for industrial maintenance
 - .NET 8. Start in development debug -> SWAGGER
 
 ## Frontend
-   1. React + NextJS
-   2. Svelte + SvelteKit
+   1. Svelte + SvelteKit
+   2. Angular
+   3. React + NextJS
+
 
 ## Database
 - PostgreSQL

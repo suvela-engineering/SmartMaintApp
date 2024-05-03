@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 3rem; /* Adjust padding as needed */
+  margin-left: 3rem; /* Adjust margin to create space from the navigation */
+}
+
+.navigation {
+  position: fixed;
+  inset:y-0;
+  left:0;
+  height: 100vh;
+  width: 64px;
+  background-color: #272727;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  color: #fff;
+}
+
+.navigation a {
+    display: block;
+    padding: 0.75rem 0;
+}
+
+/* Footer Styles (Tailwind) */
+.footer {  /* Target the class applied to the footer component */
+  display: flex;
+  justify-content: center; /* Center footer content */
+  align-items: flex-end; /* Align footer content to bottom */
+  padding: 1rem 0; /* Adjust padding as needed */
+  background-color: #35427e;;
+  color: #fff; /* White text color */
+}
