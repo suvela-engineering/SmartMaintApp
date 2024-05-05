@@ -1,7 +1,7 @@
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Link } from './../../../../../SmartMaintSvelte/smartmaintwebapp/src/definitions/interfaces';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Link } from '../../models/layout/Link.model';
 
 @Component({
   selector: 'app-navigation',
@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class AppNavigationComponent {
   links: Link[] = [
     { text: 'Home', path: '/' },
-    { text: 'About', path: '/about' }
+    { text: 'About', path: '/about' },
+    { text: 'User', path: '/user' }
   ];
 }

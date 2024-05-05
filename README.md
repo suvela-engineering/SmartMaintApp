@@ -9,7 +9,6 @@ AI assistant application for industrial maintenance
    2. Angular
    3. React + NextJS
 
-
 ## Database
 - PostgreSQL
 
