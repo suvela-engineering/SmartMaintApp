@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { User } from './../models/User.model';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../models/User.model';
 import { Observable, catchError, of, retry, throwError } from 'rxjs';
 
 const apiUrl = 'http://localhost:5264/API/User'; // TO DO: This to env etc file
@@ -10,26 +10,41 @@ const apiUrl = 'http://localhost:5264/API/User'; // TO DO: This to env etc file
 })
 
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(apiUrl)
-    .pipe(
-      retry(2), // Retry up to 2 times on network failures (optional)
-      catchError(this.handleError)
-    );
+      .pipe(
+        retry(2), // Retry up to 2 times on network failures
+        catchError(this.handleError)
+      );
   }
 
-  private handleError(error: any) {
+  saveUser(user: User): Observable<User> {
+    return this.http.post<User>(apiUrl, user)
+      .pipe(
+        catchError(this.handleError) // Built-in behavior of catchError(). When you use catchError(handleError), the catchError operator implicitly wraps your handleError function with another function.
+      );
+  }
+
+  private handleError(error: any): Observable<never> {
     let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
+    let errorStatus = 'Unknown Error';
+
+    if (typeof error.error === 'object') {
       // Client-side or network error occurred. Handle it accordingly.
       errorMessage = 'An error occurred: ' + error.error.message;
     } else {
       // The backend returned an unsuccessful response code.
-      errorMessage =
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`;
+      errorMessage = `Backend returned code ${error.status} - ${error.message}`;
+      errorStatus = error.status.toString(); // Get status code as string
     }
-    return of<User[]>([]); // Return an empty array in case of error
+
+    // Log or display the error message to the user (optional)
+    console.error(errorMessage);
+
+    // Optionally, return a user-friendly error message or an empty Observable
+    // based on your error handling strategy.
+    return throwError(() => new Error(errorMessage)); // Throw a user-friendly error
   }
 }

@@ -1,28 +1,43 @@
 import { HelperService } from './../../helper/helper.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/User.model';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
+import { UserModalComponent } from './user-modal/user-modal.component';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { sign } from 'crypto';
+import { CustomtableComponent } from '../customtable/customtable.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, TableModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    UserModalComponent,
+    ButtonModule,
+    DialogModule,
+    CustomtableComponent
+  ],
+  providers: [UserModalComponent],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css',
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
   errorMessage: string = '';
-  displayedHeaders: string[] = [];
-  excludedProperties = ['Id', 'EntityInfo_Deleted', 'EntityInfo_DeletedBy'];
   cols: any[] = [];
+  // showUserModal: boolean = false;
+  // showModal: WritableSignal<boolean> = signal(false);
+  protected showUserModal: boolean = false;
+
 
   constructor(
     private userService: UserService,
-    private helperService: HelperService
-  ) {}
+    private userModal: UserModalComponent,
+    private dialog: DialogModule
+  ) { }
 
   ngOnInit() {
     this.getUsers();
@@ -53,6 +68,10 @@ export class UsersComponent implements OnInit {
 
     this.cols = [
       {
+        field: 'userName',
+        header: 'User Name',
+      },
+      {
         field: 'firstName',
         header: 'First Name',
       },
@@ -72,10 +91,15 @@ export class UsersComponent implements OnInit {
         field: 'phoneNumber',
         header: 'Phone Number',
       },
-      {
-        field: 'userName',
-        header: 'User Name',
-      },
     ];
   };
+
+  // toggleUserModal = () => {
+  //   this.userModal.visible = !this.userModal.visible;
+  // };
+
+  openUserModal() {
+    this.showUserModal = true;
+    console.log('modal openUserModal():' + " , showUserModal: " + this.showUserModal); //, this.user);
+  }
 }

@@ -1,0 +1,47 @@
+/* Apply styles to the entire table element */
+table {
+  width: 100%; /* Make the table full width */
+  border-collapse: collapse;
+}
+
+/* Style table headers */
+th {
+  @apply text-left px-4 py-2 mb-3 font-medium font-bold text-black bg-orange-lighter-dark tracking-wider ;
+
+}
+
+th:first-child {
+  border-left-style: solid;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+th:last-child {
+  border-right-style: solid;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Style table rows (zebra striping for even/odd rows) */
+tr {
+  @apply border-b border-white bg-blue-100 hover:bg-blue-200;
+}
+
+/* Style table cells */
+td {
+  @apply px-4 py-2 ;
+}
+
+td:first-child {
+  border-left-style: solid;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+td:last-child {
+  border-right-style: solid;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.bg-orange-lighter-dark {
+  background-color: #d1d6fd;
+}
