@@ -13,7 +13,14 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:*"); // TO DO: Put maybe to .env file etc
+                          //   policy.WithOrigins("*"); works but not good
+                          policy.WithOrigins("http://localhost:4200"); // TO DO: Put maybe to .env file etc
+
+                          // Allow specific methods for CRUD operations (GET, POST, PUT, DELETE)
+                          policy.WithMethods("GET", "POST", "PUT", "DELETE");
+
+                          // Optionally, allow specific headers if needed (e.g., Content-Type)
+                          policy.WithHeaders("Content-Type");
                       });
 });
 
@@ -41,8 +48,10 @@ builder.Services.AddIdentityCore<User>()
 
 var app = builder.Build();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 //app.MapIdentityApi<User>();
-//app.UseAuthorization();
+app.UseAuthorization();
 //app.UseRouting();
 
 // Configure the HTTP request pipeline.
@@ -52,7 +61,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 app.MapControllers();
