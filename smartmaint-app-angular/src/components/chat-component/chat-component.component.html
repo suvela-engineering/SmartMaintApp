@@ -1,31 +1,68 @@
-<p>chat-component works!</p>
 <!-- <div *ngFor="let response of responses">
   <p>{{ response.message }}</p>
-</div>
+</div> -->
 
-
-<ng-template ngFor let-sender [ngForOf]="responses | groupBy: 'sender'">
-  <h3>{{ sender }}</h3>
-  <div *ngFor="let response of sender">
-    <p>{{ response.message }}</p>
-  </div>
-</ng-template> -->
-
-<div class="input-container">
-  <i class="fa fa-search"></i>
-  <input type="text" [(ngModel)]="userInput" placeholder="Kirjoita viestisi tähän...">
-</div>
-
-<!-- Laajempi chat komponentti:
-<div class="chat-container">
-  <div *ngFor="let response of responses">
-    <div [ngClass]="{'user-message': response.type === 'user', 'system-message': response.type === 'system'}">
-      <p>{{ response.message }} <small>({{ response.timestamp | date: 'HH:mm' }})</small></p>
-      <div *ngIf="response.attachments">
-        <span *ngFor="let attachment of response.attachments">
-          <i class="fa fa-paperclip"></i> {{ attachment.name }}
-        </span>
+<div class="container mx-auto p-4">
+  <div *ngFor="let response of responses; let i = index">
+    <div class="message-container flex items-start mb-4">
+      <span class="timestamp text-gray-500 mr-2">{{ response.timestamp | date: 'HH:mm' }}</span>
+      <div [ngClass]="{'user-message': response.sender === 'user', 'system-message': response.sender === 'system'}">
+        <p class="p-2 rounded-lg">{{ response.message }}</p>
       </div>
     </div>
   </div>
-</div> -->
+
+  <div class="input-container flex items-center">
+    <input type="text" [(ngModel)]="userInput" placeholder="Kirjoita viestisi tähän..." class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500">
+    <button class="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-lg" (click)="sendMessage()">Lähetä</button>
+  </div>
+</div>
+
+<div class="input-container">
+  <i class="fa fa-search"></i>
+  <input
+    type="text"
+    [(ngModel)]="userInput"
+    placeholder="Kirjoita viestisi tähän..."
+  />
+</div>
+
+<button
+  type="button"
+  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md focus:outline-none ml-2"
+  (click)="sendMessage()"
+>
+  Lähetä
+</button>
+<!-- Laajempi chat komponentti:
+
+1.
+<div *ngFor="let response of responses">
+  <div [ngClass]="{'user-message': response.sender === 'user', 'system-message': response.sender === 'system'}">
+    <p>{{ response.message }} <small>({{ response.timestamp | date: 'HH:mm' }})</small></p>
+    <div *ngIf="response.attachments">
+      <span *ngFor="let attachment of response.attachments">
+        <i class="fa fa-paperclip"></i> {{ attachment.name }}
+      </span>
+    </div>
+  </div>
+</div>
+
+tai
+
+2.
+<div *ngFor="let response of responses; let i = index">
+  <div #messageElement [ngClass]="{'user-message': response.sender === 'user', 'system-message': response.sender === 'system'}">
+    <p>{{ response.message }} <small>({{ response.timestamp | date: 'HH:mm' }})</small></p>
+    <div *ngIf="response.attachments">
+      <span *ngFor="let attachment of response.attachments">
+        <i class="fa fa-paperclip"></i> {{ attachment.name }}
+      </span>
+    </div>
+  </div>
+  <div *ngIf="i > 0 && responses[i].sender !== responses[i - 1].sender">
+    <h3>{{ response.sender }}</h3> </div>
+</div>
+
+
+-->

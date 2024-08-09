@@ -13,3 +13,28 @@ input {
   font-size: 16px;
   background-color: #e6f0ff; /* Vaaleansininen taustaväri */
 }
+
+.user-message p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+.system-message p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.message-container {
+  display: flex;
+  align-items: flex-start;
+}
+.timestamp {
+  margin-right: 10px;
+}
+
+.user-message {
+  padding: 10px;
+}
+.system-message {
+  padding: 10px;
+}
