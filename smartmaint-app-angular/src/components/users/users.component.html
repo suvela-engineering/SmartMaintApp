@@ -5,8 +5,14 @@
   Add User
 </button>
 
-<div class="mt-5">
-  <app-customtable [columns]="cols" [data]="users"></app-customtable>
+<div *ngIf="isLoading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!isLoading">
+  <div class="mt-5">
+    <app-customtable [columns]="cols" [data]="users"></app-customtable>
+  </div>
 </div>
 
 <user-modal [(show)]="showUserModal" (userSaved)="getUsers()"></user-modal>

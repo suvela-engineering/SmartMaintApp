@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { sign } from 'crypto';
 import { CustomtableComponent } from '../customtable/customtable.component';
+import { LoadingComponent } from '../../helper/helperComponents/loading/loading.component';
 
 @Component({
   selector: 'app-users',
@@ -19,7 +20,8 @@ import { CustomtableComponent } from '../customtable/customtable.component';
     UserModalComponent,
     ButtonModule,
     DialogModule,
-    CustomtableComponent
+    CustomtableComponent,
+    LoadingComponent,
   ],
   providers: [UserModalComponent],
   templateUrl: './users.component.html',
@@ -28,6 +30,7 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   errorMessage: string = '';
   cols: any[] = [];
+  isLoading: boolean = true;
 
   protected showUserModal: boolean = false;
 
@@ -44,18 +47,22 @@ export class UsersComponent implements OnInit {
   }
 
   protected getUsers(): void {
+    this.isLoading = true;
+
     this.userService.getUsers().subscribe({
       next: (data: User[]) => {
         this.users = data;
-        //this.displayedHeaders = this.getTableHeaders();
+        this.isLoading = false;
       },
       error: (error) => {
         this.errorMessage = error;
         console.error('Error retrieving users:', error);
+        this.isLoading = false;
       },
       complete: () => {
         // TO DO: Remove if not implemented really
         console.log('User data retrieval complete'); // Optional for debugging
+        this.isLoading = false;
       },
     });
   }
