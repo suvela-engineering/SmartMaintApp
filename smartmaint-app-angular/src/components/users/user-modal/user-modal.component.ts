@@ -30,6 +30,7 @@ export class UserModalComponent implements OnInit {
   @Input() title: string = '';
   @Input() data: any = {};
   @Output() showChange = new EventEmitter<boolean>(); // optional event for closing
+  @Output() userSaved = new EventEmitter<void>();
 
   editForm: FormGroup;
 
@@ -57,7 +58,7 @@ export class UserModalComponent implements OnInit {
       .subscribe({
         next: savedUser => {
           this.showChange.emit(false); // Close modal
-        //  this.userSaved.emit(savedUser); // Emit saved user data (optional)
+          this.userSaved.emit(); // Emit event to notify parent component that user has been saved
         },
         error: error => {
           console.error('Error saving user:', error);

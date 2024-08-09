@@ -28,8 +28,7 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   errorMessage: string = '';
   cols: any[] = [];
-  // showUserModal: boolean = false;
-  // showModal: WritableSignal<boolean> = signal(false);
+
   protected showUserModal: boolean = false;
 
 
@@ -44,7 +43,7 @@ export class UsersComponent implements OnInit {
     this.getTableHeaders();
   }
 
-  private getUsers(): void {
+  protected getUsers(): void {
     this.userService.getUsers().subscribe({
       next: (data: User[]) => {
         this.users = data;

@@ -9,7 +9,8 @@
   <app-customtable [columns]="cols" [data]="users"></app-customtable>
 </div>
 
-<user-modal [(show)]="showUserModal"></user-modal>
+<user-modal [(show)]="showUserModal" (userSaved)="getUsers()"></user-modal>
+
 <!-- Vai lisääkö vaan taulun rivillä uuden objektin? -->
 
 <!--
