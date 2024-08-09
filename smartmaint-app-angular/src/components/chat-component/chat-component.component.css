@@ -1,0 +1,15 @@
+.input-container {
+   width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+input {
+  flex-grow: 1;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #e6f0ff; /* Vaaleansininen taustaväri */
+}

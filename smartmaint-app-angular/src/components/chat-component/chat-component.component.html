@@ -1,0 +1,31 @@
+<p>chat-component works!</p>
+<!-- <div *ngFor="let response of responses">
+  <p>{{ response.message }}</p>
+</div>
+
+
+<ng-template ngFor let-sender [ngForOf]="responses | groupBy: 'sender'">
+  <h3>{{ sender }}</h3>
+  <div *ngFor="let response of sender">
+    <p>{{ response.message }}</p>
+  </div>
+</ng-template> -->
+
+<div class="input-container">
+  <i class="fa fa-search"></i>
+  <input type="text" [(ngModel)]="userInput" placeholder="Kirjoita viestisi tähän...">
+</div>
+
+<!-- Laajempi chat komponentti:
+<div class="chat-container">
+  <div *ngFor="let response of responses">
+    <div [ngClass]="{'user-message': response.type === 'user', 'system-message': response.type === 'system'}">
+      <p>{{ response.message }} <small>({{ response.timestamp | date: 'HH:mm' }})</small></p>
+      <div *ngIf="response.attachments">
+        <span *ngFor="let attachment of response.attachments">
+          <i class="fa fa-paperclip"></i> {{ attachment.name }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div> -->

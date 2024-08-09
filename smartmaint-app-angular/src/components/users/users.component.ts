@@ -61,7 +61,7 @@ export class UsersComponent implements OnInit {
       },
       complete: () => {
         // TO DO: Remove if not implemented really
-        console.log('User data retrieval complete'); // Optional for debugging
+        // console.log('User data retrieval complete'); // Optional for debugging
         this.isLoading = false;
       },
     });
@@ -106,6 +106,6 @@ export class UsersComponent implements OnInit {
 
   openUserModal() {
     this.showUserModal = true;
-    console.log('modal openUserModal():' + " , showUserModal: " + this.showUserModal); //, this.user);
+    // console.log('modal openUserModal():' + " , showUserModal: " + this.showUserModal); //, this.user);
   }
 }

@@ -42,7 +42,7 @@ export class UserModalComponent implements OnInit {
   };
 
   ngOnInit() {
-    console.log('UserModalComponent ngOnInit, show: ' + this.show);
+    // console.log('UserModalComponent ngOnInit, show: ' + this.show);
   }
 
   // Function to handle form submission or actions within the dialog (optional)
@@ -69,6 +69,6 @@ export class UserModalComponent implements OnInit {
 
   onCancel() {
     this.showChange.emit(false);
-    console.log('modal onCancel():' + ' , show: ' + this.show);
+    // console.log('modal onCancel():' + ' , show: ' + this.show);
   }
 }
