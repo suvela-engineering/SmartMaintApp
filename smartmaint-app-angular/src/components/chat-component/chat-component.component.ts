@@ -3,11 +3,13 @@ import { ChatResponse } from './../../../../SmartMaintSvelte/smartmaintwebapp/sr
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-chat-component',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, CdkTextareaAutosize, MatInputModule],
   templateUrl: './chat-component.component.html',
   styleUrl: './chat-component.component.css'
 })

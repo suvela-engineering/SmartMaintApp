@@ -9,7 +9,7 @@
   </div>
 
   <div class="input-container flex items-center">
-    <input type="text" [(ngModel)]="userInput" placeholder="Kirjoita viestisi tähän..." class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500">
+    <textarea cdkAutosize #autosize minRows="1" maxRows="10" [(ngModel)]="userInput" placeholder="Kirjoita viestisi tähän..." class="flex-grow px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"></textarea>
     <button class="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-lg" (click)="sendMessage()">Lähetä</button>
   </div>
 </div>
