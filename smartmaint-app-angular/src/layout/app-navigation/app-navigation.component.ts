@@ -16,5 +16,6 @@ export class AppNavigationComponent {
     { text: 'About', path: '/about' },
     { text: 'User', path: '/user' },
     { text: 'Chat', path: '/chat' },
+    { text: 'Images', path: '/image' },
   ];
 }

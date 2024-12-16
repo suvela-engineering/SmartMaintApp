@@ -45,6 +45,6 @@ export class UserService {
 
     // Optionally, return a user-friendly error message or an empty Observable
     // based on your error handling strategy.
-    return throwError(() => new Error(errorMessage)); // Throw a user-friendly error
+    return throwError(() => new Error(errorMessage));
   }
 }

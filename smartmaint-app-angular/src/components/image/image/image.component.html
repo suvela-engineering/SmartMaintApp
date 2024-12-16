@@ -1,0 +1,35 @@
+<div>
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="onUpload()">Upload</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Thumbnail</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let image of images">
+        <td><img [src]="image.thumbnailUrl" alt="Thumbnail"></td>
+        <td>{{ image.name }}</td>
+        <td>{{ image.description }}</td>
+        <td>{{ image.date }}</td>
+        <td>
+          <button (click)="openImage(image)">View</button>
+          <button (click)="downloadImage(image.id)">Download</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedImage">
+    <h2>{{ selectedImage.name }}</h2>
+    <img [src]="selectedImage.thumbnailUrl" alt="Full Image">
+    <p>{{ selectedImage.description }}</p>
+    <p>{{ selectedImage.date }}</p>
+  </div>
+</div>

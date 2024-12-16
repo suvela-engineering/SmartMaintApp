@@ -14,7 +14,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
   styleUrl: './chat-component.component.css'
 })
 export class ChatComponent {
-  message = '';
+  message: string = '';
   responses: ChatResponse[] = this.generateTestData(); // Generate test data on init
   userInput: string = '';
 
