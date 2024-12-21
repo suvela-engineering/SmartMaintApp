@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartMaintApi.Services;
-using Microsoft.AspNetCore.Http;
-using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SmartMaintApi.Controllers
@@ -24,6 +23,20 @@ namespace SmartMaintApi.Controllers
             return Ok(items);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetImages()
+        {
+            var images = await _imageService.GetImagesAsync();
+            return Ok(images);
+        }
+
+        [HttpGet("get-image-url/{id}")]
+        public async Task<IActionResult> GetImageUrl(string id)
+        {
+            var url = await _imageService.GetImageUrlAsync(id);
+            return Content(url, "text/plain");
+        }
+
         [HttpPost("upload")]
         public async Task<IActionResult> UploadImage([FromForm] IFormFile file)
         {
@@ -33,7 +46,7 @@ namespace SmartMaintApi.Controllers
             var result = await _imageService.UploadImageAsync(file);
             if (result)
                 return Ok();
-            
+
             return StatusCode(500, "Error uploading file.");
         }
 
@@ -47,11 +60,16 @@ namespace SmartMaintApi.Controllers
             return File(stream, "application/octet-stream", id);
         }
 
-        [HttpGet("search")]
-        public async Task<IActionResult> SearchFiles([FromQuery] string type, [FromQuery] string fileName, [FromQuery] DateTimeOffset? startDate, [FromQuery] DateTimeOffset? endDate)
+        [HttpGet("download/resized/{id}")]
+        public async Task<IActionResult> DownloadResizedImage(string id, [FromQuery] int width, [FromQuery] int height)
         {
-            var items = await _imageService.SearchFilesAsync(type, fileName, startDate, endDate);
-            return Ok(items);
+            var imageBytes = await _imageService.DownloadImageBytesAsync(id, width, height);
+            if (imageBytes == null || imageBytes.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return File(imageBytes, "image/jpeg");
         }
     }
 }

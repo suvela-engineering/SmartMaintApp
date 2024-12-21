@@ -1,11 +1,9 @@
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace SmartMaintApi.Services
 {
@@ -24,6 +22,30 @@ namespace SmartMaintApi.Services
                 HttpClientInitializer = credential,
                 ApplicationName = "MyAppName",
             });
+        }
+
+        public async Task<IEnumerable<ImageFile>> GetImagesAsync()
+        {
+            var request = _driveService.Files.List();
+            request.Q = "mimeType contains 'image/'";
+            request.Fields = "files(id, name, thumbnailLink, webContentLink, createdTime)";
+
+            var result = await request.ExecuteAsync();
+            return result.Files.Select(f => new ImageFile
+            {
+                Id = f.Id,
+                Name = f.Name,
+                ThumbnailUrl = f.ThumbnailLink,
+                Date = f.CreatedTimeDateTimeOffset.HasValue ? f.CreatedTimeDateTimeOffset.Value : (DateTimeOffset?)null,
+                FullImageUrl = f.WebContentLink // Käytetään täysikokoisen kuvan linkkiä
+            }).ToList();
+        }
+        public async Task<string> GetImageUrlAsync(string fileId)
+        {
+            var request = _driveService.Files.Get(fileId);
+            request.Fields = "webContentLink";
+            var file = await request.ExecuteAsync();
+            return file.WebContentLink;
         }
 
         public async Task<IEnumerable<string>> ListAllFilesAndFoldersAsync()
@@ -63,6 +85,46 @@ namespace SmartMaintApi.Services
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
+        public async Task<byte[]> DownloadImageBytesAsync(string fileId, int width, int height)
+        {
+            var request = _driveService.Files.Get(fileId);
+            using (var stream = new MemoryStream())
+            {
+                await request.DownloadAsync(stream);
+                stream.Seek(0, SeekOrigin.Begin);
+
+                using (var image = SixLabors.ImageSharp.Image.Load(stream))
+                {
+                    var resizedImage = ResizeImage(image, width, height);
+                    using (var resizedStream = new MemoryStream())
+                    {
+                        resizedImage.Save(resizedStream, new JpegEncoder());
+                        return resizedStream.ToArray();
+                    }
+                }
+            }
+        }
+
+        private SixLabors.ImageSharp.Image ResizeImage(SixLabors.ImageSharp.Image image, int width, int height)
+        {
+            var aspectRatio = (float)image.Width / image.Height;
+            int newWidth, newHeight;
+
+            if (width / (float)height > aspectRatio)
+            {
+                newHeight = height;
+                newWidth = (int)(height * aspectRatio);
+            }
+            else
+            {
+                newWidth = width;
+                newHeight = (int)(width / aspectRatio);
+            }
+
+            image.Mutate(x => x.Resize(newWidth, newHeight));
+            return image;
+        }
+
         public async Task<IEnumerable<string>> SearchFilesAsync(string? type = null, string? fileName = null, DateTimeOffset? startDate = null, DateTimeOffset? endDate = null)
         {
             var request = _driveService.Files.List();

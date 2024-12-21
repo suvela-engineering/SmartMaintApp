@@ -1,35 +1,53 @@
-<div>
-  <input type="file" (change)="onFileSelected($event)" />
-  <button (click)="onUpload()">Upload</button>
+<!-- Toimii -->
 
-  <table>
-    <thead>
-      <tr>
-        <th>Thumbnail</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let image of images">
-        <td><img [src]="image.thumbnailUrl" alt="Thumbnail"></td>
-        <td>{{ image.name }}</td>
-        <td>{{ image.description }}</td>
-        <td>{{ image.date }}</td>
-        <td>
-          <button (click)="openImage(image)">View</button>
-          <button (click)="downloadImage(image.id)">Download</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<!-- <button
+  (click)="onFileSelected($event)"
+  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75 w-1/6"
+>
+  Upload Image
+</button>
 
-  <div *ngIf="selectedImage">
-    <h2>{{ selectedImage.name }}</h2>
-    <img [src]="selectedImage.thumbnailUrl" alt="Full Image">
-    <p>{{ selectedImage.description }}</p>
-    <p>{{ selectedImage.date }}</p>
+<div *ngIf="isLoading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!isLoading">
+  <div class="mt-5">
+    <app-customtable [columns]="cols" [data]="images" (action)="handleAction($event)" [thumbnailWidth]="150" [thumbnailHeight]="150"></app-customtable>
   </div>
 </div>
+
+<p-dialog [(visible)]="displayImageDialog" modal="true" [closable]="true" [dismissableMask]="true" [style]="{width: '80vw', height: '80vh'}" [contentStyle]="{display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden'}">
+  <div *ngIf="selectedImageUrl" class="image-modal-content">
+    <img [src]="selectedImageUrl" alt="Full Image" class="full-image">
+  </div>
+</p-dialog> -->
+
+<!-- TOimii loppuu  -->
+
+<button
+  (click)="onFileSelected($event)"
+  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75 w-1/6"
+>
+  Upload Image
+</button>
+
+<div *ngIf="isLoading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!isLoading">
+  <div class="mt-5">
+    <app-customtable [columns]="cols" [data]="images" (action)="handleAction($event)" [thumbnailWidth]="150" [thumbnailHeight]="150"></app-customtable>
+  </div>
+</div>
+
+<p-dialog [(visible)]="displayImageDialog" modal="true" [closable]="true" [dismissableMask]="true" [style]="{width: 'calc(100vw - 200px)', height: 'calc(100vh - 200px)'}" [contentStyle]="{height: '100%', overflow: 'hidden'}">
+  <div *ngIf="selectedImageUrl" class="image-modal-content">
+    <img [src]="selectedImageUrl" alt="Full Image" class="full-image">
+  </div>
+</p-dialog>
+
+
+
+

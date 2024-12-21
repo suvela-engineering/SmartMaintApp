@@ -45,3 +45,59 @@ td:last-child {
 .bg-orange-lighter-dark {
   background-color: #d1d6fd;
 }
+
+/* Korjaa Download-napin hover-tila */
+button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px; /* Pyöristetyt reunat */
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+button:hover {
+  background-color: #2563eb;
+}
+
+button:active {
+  opacity: 0.75;
+}
+
+/* Modal-ikkunan sisältö */
+.image-modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Modal-ikkunan kuva */
+.full-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* Poistetaan siirtokurssi kokonaan otsikkoalueelta ja muista ei-klikattavista elementeistä */
+.p-dialog-header,
+.p-dialog-content {
+  cursor: default !important;
+}
+
+/* Palautetaan kursori klikattavilla elementeillä */
+.p-dialog-header .p-dialog-titlebar-close,
+button,
+img.full-image {
+  cursor: pointer;
+}
+
+/* Palautetaan normaali kursori muilla alueilla */
+.p-dialog-header:hover,
+.p-dialog-content:hover {
+  cursor: default;
+}
