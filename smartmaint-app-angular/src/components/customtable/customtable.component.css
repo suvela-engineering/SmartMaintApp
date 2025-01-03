@@ -101,3 +101,13 @@ img.full-image {
 .p-dialog-content:hover {
   cursor: default;
 }
+
+/* Lisää pointer-kursori datatable-riveille */
+tbody tr {
+  cursor: pointer;
+}
+
+/* Varmistetaan, että Download-nappi ei muuta riviä */
+tbody tr button {
+  cursor: pointer;
+}

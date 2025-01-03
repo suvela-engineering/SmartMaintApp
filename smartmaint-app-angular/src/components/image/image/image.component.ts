@@ -72,7 +72,7 @@ export class ImageComponent implements OnInit {
     if (action === 'download') {
       this.download(imageId);
     } else if (action === 'view') {
-      this.showImageDialog(imageId);
+      this.openView(imageId);
     }
   }
 
@@ -99,26 +99,6 @@ export class ImageComponent implements OnInit {
       }
     });
   }
-
-  showImageDialog(imageId: string): void {
-    const screenWidth = screen.width; // Käytä screen.width
-    const screenHeight = screen.height; // Käytä screen.height
-
-    const scaledWidth = Math.floor(screenWidth * 0.65);
-    const scaledHeight = Math.floor(screenHeight * 0.65);
-
-    this.imageService.downloadImageResized(imageId, scaledWidth, scaledHeight).subscribe({
-      next: (blob) => {
-        const url = window.URL.createObjectURL(blob);
-        this.selectedImageUrl = url;
-        this.displayImageDialog = true;
-      },
-      error: (error) => {
-        console.error('Error fetching image:', error);
-      }
-    });
-  }
-
 
   closeImageDialog(): void {
     this.displayImageDialog = false;

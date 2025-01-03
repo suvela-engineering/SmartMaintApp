@@ -1,33 +1,16 @@
-<!-- Toimii -->
-
-<!-- <button
-  (click)="onFileSelected($event)"
+<button
+  (click)="fileInput.click()"
   class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75 w-1/6"
 >
-  Upload Image
+  Select Image
 </button>
 
-<div *ngIf="isLoading">
-  <app-loading></app-loading>
-</div>
-
-<div *ngIf="!isLoading">
-  <div class="mt-5">
-    <app-customtable [columns]="cols" [data]="images" (action)="handleAction($event)" [thumbnailWidth]="150" [thumbnailHeight]="150"></app-customtable>
-  </div>
-</div>
-
-<p-dialog [(visible)]="displayImageDialog" modal="true" [closable]="true" [dismissableMask]="true" [style]="{width: '80vw', height: '80vh'}" [contentStyle]="{display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden'}">
-  <div *ngIf="selectedImageUrl" class="image-modal-content">
-    <img [src]="selectedImageUrl" alt="Full Image" class="full-image">
-  </div>
-</p-dialog> -->
-
-<!-- TOimii loppuu  -->
+<!-- Piilotettu file input, jota käytetään tiedoston valitsemiseen -->
+<input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput>
 
 <button
-  (click)="onFileSelected($event)"
-  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75 w-1/6"
+  (click)="onUpload()"
+  class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-green-300/50 active:opacity-75 w-1/6"
 >
   Upload Image
 </button>
@@ -42,12 +25,9 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="displayImageDialog" modal="true" [closable]="true" [dismissableMask]="true" [style]="{width: 'calc(100vw - 200px)', height: 'calc(100vh - 200px)'}" [contentStyle]="{height: '100%', overflow: 'hidden'}">
+<p-dialog [(visible)]="displayImageDialog" modal="true" [closable]="true" [dismissableMask]="true" [style]="{height: '80vh'}" [contentStyle]="{height: '100%', overflow: 'auto'}">
   <div *ngIf="selectedImageUrl" class="image-modal-content">
     <img [src]="selectedImageUrl" alt="Full Image" class="full-image">
   </div>
 </p-dialog>
-
-
-
 

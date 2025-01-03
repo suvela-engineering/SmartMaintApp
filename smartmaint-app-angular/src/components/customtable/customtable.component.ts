@@ -24,7 +24,8 @@ import { TableColumn, TableData } from '../../models/components/customtable/cust
             <ng-template #defaultField>{{ row[col.field] }}</ng-template>
           </ng-container>
           <ng-template #actions>
-            <button (click)="download(row['id']); $event.stopPropagation();" class="xxx">
+            <button (click)="download(row['id']); $event.stopPropagation();"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75">
               Download
             </button>
           </ng-template>

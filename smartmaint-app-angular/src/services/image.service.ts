@@ -25,14 +25,6 @@ export class ImageService {
     return this.http.get(`${this.baseUrl}/download/${id}`, { responseType: 'blob' });
   }
 
-  downloadImageScaled(imageId: string, width: number, height: number): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/download/${imageId}?width=${width}&height=${height}`, { responseType: 'blob' });
-  }
-
-  downloadImageResized(imageId: string, width: number, height: number): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/download/resized/${imageId}?width=${width}&height=${height}`, { responseType: 'blob' });
-  }
-
   searchFiles(type?: string, fileName?: string, startDate?: string, endDate?: string): Observable<any[]> {
     let params = new HttpParams();
 
@@ -53,13 +45,5 @@ export class ImageService {
     }
 
     return this.http.get<any[]>(`${this.baseUrl}/search`, { params });
-  }
-
-  // getFullImage(id: string): Observable<any> {
-  //   return this.http.get<any>(`${this.baseUrl}/full/${id}`);
-  // }
-
-  getImageUrl(imageId: string): Observable<string> {
-    return this.http.get(`${this.baseUrl}/get-image-url/${imageId}`, { responseType: 'text' });
   }
 }

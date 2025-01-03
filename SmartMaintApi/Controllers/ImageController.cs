@@ -10,13 +10,14 @@ namespace SmartMaintApi.Controllers
     public class ImageController : ControllerBase
     {
         private readonly ImageService _imageService;
+        private readonly ILogger<ImageService> _logger;
 
         public ImageController(ImageService imageService)
         {
             _imageService = imageService;
         }
 
-        [HttpGet("list-all")]
+        [HttpGet("list-all")] // For debugging
         public async Task<IActionResult> ListAllFilesAndFolders()
         {
             var items = await _imageService.ListAllFilesAndFoldersAsync();
@@ -38,17 +39,29 @@ namespace SmartMaintApi.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadImage([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadImage(IFormFile file)
         {
             if (file == null || file.Length == 0)
+            {
                 return BadRequest("No file uploaded.");
+            }
 
-            var result = await _imageService.UploadImageAsync(file);
-            if (result)
+            try
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    await _imageService.UploadImageAsync(stream, file.FileName);
+                }
+
                 return Ok();
-
-            return StatusCode(500, "Error uploading file.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error uploading image");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
 
         [HttpGet("download/{id}")]
         public async Task<IActionResult> DownloadImage(string id)
