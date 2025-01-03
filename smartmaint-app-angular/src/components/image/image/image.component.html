@@ -1,16 +1,20 @@
-<button
-  (click)="fileInput.click()"
-  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75 w-1/6"
->
-  Select Image
-</button>
+<div style="display: flex; align-items: center; margin-bottom: 10px;">
+  <span *ngIf="selectedFileName" style="margin-right: 10px;">Selected file: {{ selectedFileName }}</span>
+  <button
+    (click)="fileInput.click()"
+    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75"
+  >
+    Select Image
+  </button>
+</div>
 
 <!-- Piilotettu file input, jota käytetään tiedoston valitsemiseen -->
 <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput>
 
 <button
   (click)="onUpload()"
-  class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-green-300/50 active:opacity-75 w-1/6"
+  class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-green-300/50 active:opacity-75"
+  style="margin-bottom: 10px;"
 >
   Upload Image
 </button>
@@ -25,9 +29,21 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="displayImageDialog" modal="true" [closable]="true" [dismissableMask]="true" [style]="{height: '80vh'}" [contentStyle]="{height: '100%', overflow: 'auto'}">
-  <div *ngIf="selectedImageUrl" class="image-modal-content">
-    <img [src]="selectedImageUrl" alt="Full Image" class="full-image">
+<p-dialog [(visible)]="displayImageDialog" modal="true" [closable]="true" [dismissableMask]="true" [style]="{height: '80vh', overflow: 'hidden'}">
+  <ng-template pTemplate="header">
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
+      <button (click)="zoomIn()" style="background-color: #007bff; color: white; font-weight: bold; padding: 12px 20px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer; transition: background-color 0.2s ease; margin-right: 10px;">+</button>
+      <button (click)="zoomOut()" style="background-color: #007bff; color: white; font-weight: bold; padding:12px 20px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer; transition: background-color 0.2s ease; margin-right: 10px;">-</button>
+      <span>Image Viewer</span>
+    </div>
+  </ng-template>
+  <div class="image-modal-content" style="display: flex; justify-content: center; align-items: center; height: 100%; overflow: auto;">
+    <img [src]="selectedImageUrl" alt="Full Image" class="full-image" [style.transform]="zoomLevel" style="object-fit: contain; transition: transform 0.2s ease;">
   </div>
 </p-dialog>
+
+
+
+
+
 

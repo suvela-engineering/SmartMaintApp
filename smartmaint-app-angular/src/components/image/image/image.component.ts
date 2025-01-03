@@ -18,10 +18,12 @@ import { LoadingComponent } from '../../../helper/helperComponents/loading/loadi
 export class ImageComponent implements OnInit {
   images: any[] = [];
   selectedFile: File | null = null;
+  selectedFileName: string | null = null; // Lisää muuttuja
   isLoading: boolean = true;
   cols: any[] = [];
   displayImageDialog: boolean = false;
   selectedImageUrl: string = '';
+  zoomLevel: string = 'scale(1)';
 
   constructor(private imageService: ImageService) { }
 
@@ -56,6 +58,9 @@ export class ImageComponent implements OnInit {
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      this.selectedFileName = this.selectedFile.name;
+    }
   }
 
   onUpload(): void {
@@ -103,5 +108,19 @@ export class ImageComponent implements OnInit {
   closeImageDialog(): void {
     this.displayImageDialog = false;
     this.selectedImageUrl = '';
+  }
+  // Zoomaus-toiminnallisuus
+  zoomIn(): void {
+    this.adjustZoom(0.1);
+  }
+
+  zoomOut(): void {
+    this.adjustZoom(-0.1);
+  }
+
+  adjustZoom(factor: number): void {
+    const currentScale = parseFloat(this.zoomLevel.replace('scale(', '').replace(')', ''));
+    const newScale = Math.max(0.1, currentScale + factor);
+    this.zoomLevel = `scale(${newScale})`;
   }
 }

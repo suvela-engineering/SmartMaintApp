@@ -30,11 +30,11 @@ public class ImageService
 
     public async Task UploadImageAsync(Stream fileStream, string fileName)
     {
+        var folderId = GetFolderIdAsync("Images");
         var fileMetadata = new Google.Apis.Drive.v3.Data.File
         {
             Name = fileName,
-            // 3.1.2025 Muuta tähän id haku kuten getimagesasync 
-            Parents = new List<string> { _configuration["GDrive:SharedFolderId"] } // Use shared folder ID from config
+            Parents = new List<string> { await folderId } 
         };
 
         var request = _driveService.Files.Create(fileMetadata, fileStream, "image/jpeg");
@@ -49,18 +49,7 @@ public class ImageService
 
     public async Task<IEnumerable<ImageFile>> GetImagesAsync()
     {
-        // Määritä kansion nimi ja hae kansion ID
-        var folderRequest = _driveService.Files.List();
-        folderRequest.Q = "name='Images' and mimeType='application/vnd.google-apps.folder'";
-        folderRequest.Fields = "files(id, name)";
-        
-        var folderResult = await folderRequest.ExecuteAsync();
-        var folderId = folderResult.Files.FirstOrDefault()?.Id;
-
-        if (folderId == null)
-        {
-            throw new Exception("Images folder not found.");
-        }
+        var folderId = await GetFolderIdAsync("Images");
 
         // Hae kuvat jaetusta kansiosta
         var request = _driveService.Files.List();
@@ -77,6 +66,7 @@ public class ImageService
             FullImageUrl = f.WebContentLink
         }).ToList();
     }
+
 
     public async Task<string> GetImageUrlAsync(string fileId)
     {
@@ -149,6 +139,24 @@ public class ImageService
         image.Mutate(x => x.Resize(newWidth, newHeight));
         return image;
     }
+
+    public async Task<string> GetFolderIdAsync(string folderName)
+    {
+        var folderRequest = _driveService.Files.List();
+        folderRequest.Q = $"name='{folderName}' and mimeType='application/vnd.google-apps.folder'";
+        folderRequest.Fields = "files(id, name)";
+
+        var folderResult = await folderRequest.ExecuteAsync();
+        var folderId = folderResult.Files.FirstOrDefault()?.Id;
+
+        if (folderId == null)
+        {
+            throw new Exception($"{folderName} folder not found.");
+        }
+
+        return folderId;
+    }
+
 
     public async Task<IEnumerable<string>> SearchFilesAsync(string? type = null, string? fileName = null, DateTimeOffset? startDate = null, DateTimeOffset? endDate = null)
     {

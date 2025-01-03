@@ -66,40 +66,34 @@ button:active {
   opacity: 0.75;
 }
 
+/* Zoomausnappien kontti */
+.zoom-controls {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
 /* Modal-ikkunan sisältö */
 .image-modal-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 /* Modal-ikkunan kuva */
 .full-image {
-  max-width: 100%;
-  max-height: 100%;
   object-fit: contain;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-/* Poistetaan siirtokurssi kokonaan otsikkoalueelta ja muista ei-klikattavista elementeistä */
-.p-dialog-header,
-.p-dialog-content {
-  cursor: default !important;
-}
 
 /* Palautetaan kursori klikattavilla elementeillä */
 .p-dialog-header .p-dialog-titlebar-close,
 button,
 img.full-image {
   cursor: pointer;
-}
-
-/* Palautetaan normaali kursori muilla alueilla */
-.p-dialog-header:hover,
-.p-dialog-content:hover {
-  cursor: default;
 }
 
 /* Lisää pointer-kursori datatable-riveille */
