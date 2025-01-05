@@ -25,6 +25,10 @@ export class ImageService {
     return this.http.get(`${this.baseUrl}/download/${id}`, { responseType: 'blob' });
   }
 
+  deleteImage(id: string): Observable<void>{
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
   searchFiles(type?: string, fileName?: string, startDate?: string, endDate?: string): Observable<any[]> {
     let params = new HttpParams();
 

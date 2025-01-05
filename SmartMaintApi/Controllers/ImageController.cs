@@ -73,6 +73,20 @@ namespace SmartMaintApi.Controllers
             return File(stream, "application/octet-stream", id);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteImage(string id)
+        {
+            try
+            {
+                await _imageService.DeleteImageAsync(id);
+                return NoContent(); // HTTP 204: No Content
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpGet("download/resized/{id}")]
         public async Task<IActionResult> DownloadResizedImage(string id, [FromQuery] int width, [FromQuery] int height)
         {

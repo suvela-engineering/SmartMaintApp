@@ -24,9 +24,11 @@ import { TableColumn, TableData } from '../../models/components/customtable/cust
             <ng-template #defaultField>{{ row[col.field] }}</ng-template>
           </ng-container>
           <ng-template #actions>
-            <button (click)="download(row['id']); $event.stopPropagation();"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md shadow-blue-300/50 active:opacity-75">
+            <button class="download-button button-active" (click)="download(row['id']); $event.stopPropagation();">
               Download
+            </button>
+            <button class="delete-button button-active" (click)="delete(row['id']); $event.stopPropagation();">
+              Delete
             </button>
           </ng-template>
         </td>
@@ -62,5 +64,9 @@ export class CustomtableComponent implements OnInit {
 
   download(id: string) {
     this.action.emit({ action: 'download', data: { id } });
+  }
+
+  delete(id: string) {
+    this.action.emit({ action: 'delete', data: { id } });
   }
 }

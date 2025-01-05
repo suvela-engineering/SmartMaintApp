@@ -121,6 +121,20 @@ public class ImageService: IImageService
         }
     }
 
+    public async Task DeleteImageAsync(string fileId)
+    {
+        try
+        {
+            var request = _driveService.Files.Delete(fileId);
+            await request.ExecuteAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to delete file: {ex.Message}");
+        }
+    }
+
+
     private SixLabors.ImageSharp.Image ResizeImage(SixLabors.ImageSharp.Image image, int width, int height)
     {
         var aspectRatio = (float)image.Width / image.Height;

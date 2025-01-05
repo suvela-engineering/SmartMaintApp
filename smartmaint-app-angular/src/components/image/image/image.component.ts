@@ -1,10 +1,10 @@
-import { HttpClientModule } from '@angular/common/http';
+import { CustomtableComponent } from './../../customtable/customtable.component';
 import { CommonModule } from '@angular/common';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { ImageService } from './../../../services/image.service';
-import { Component, OnInit } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CustomtableComponent } from '../../customtable/customtable.component';
 import { LoadingComponent } from '../../../helper/helperComponents/loading/loading.component';
 
 @Component({
@@ -18,7 +18,7 @@ import { LoadingComponent } from '../../../helper/helperComponents/loading/loadi
 export class ImageComponent implements OnInit {
   images: any[] = [];
   selectedFile: File | null = null;
-  selectedFileName: string | null = null; // Lisää muuttuja
+  selectedFileName: string | null = null;
   isLoading: boolean = true;
   cols: any[] = [];
   displayImageDialog: boolean = false;
@@ -78,6 +78,8 @@ export class ImageComponent implements OnInit {
       this.download(imageId);
     } else if (action === 'view') {
       this.openView(imageId);
+    } else if (action === 'delete') {
+      this.deleteImage(imageId);
     }
   }
 
@@ -105,11 +107,17 @@ export class ImageComponent implements OnInit {
     });
   }
 
+  deleteImage(imageId: string): void {
+    this.imageService.deleteImage(imageId).subscribe(() => {
+      this.loadImages();
+    });
+  }
+
   closeImageDialog(): void {
     this.displayImageDialog = false;
     this.selectedImageUrl = '';
   }
-  // Zoomaus-toiminnallisuus
+
   zoomIn(): void {
     this.adjustZoom(0.1);
   }

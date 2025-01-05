@@ -12,6 +12,7 @@ namespace SmartMaintApi.Services
         Task<string> GetImageUrlAsync(string fileId);
         Task<IEnumerable<string>> ListAllFilesAndFoldersAsync();
         Task<Stream> DownloadImageAsync(string fileId);
+        Task DeleteImageAsync(string fileId);
         Task<byte[]> DownloadImageBytesAsync(string fileId, int width, int height);
         Task<string> GetFolderIdAsync(string folderName);
         Task<IEnumerable<string>> SearchFilesAsync(string? type = null, string? fileName = null, DateTimeOffset? startDate = null, DateTimeOffset? endDate = null);
