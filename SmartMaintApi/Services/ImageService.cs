@@ -6,7 +6,7 @@ using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace SmartMaintApi.Services;
-public class ImageService
+public class ImageService: IImageService
 {
     private readonly IConfiguration _configuration;
     private readonly DriveService _driveService;
@@ -100,6 +100,7 @@ public class ImageService
         stream.Seek(0, SeekOrigin.Begin);
         return stream;
     }
+
     public async Task<byte[]> DownloadImageBytesAsync(string fileId, int width, int height)
     {
         var request = _driveService.Files.Get(fileId);
@@ -156,7 +157,6 @@ public class ImageService
 
         return folderId;
     }
-
 
     public async Task<IEnumerable<string>> SearchFilesAsync(string? type = null, string? fileName = null, DateTimeOffset? startDate = null, DateTimeOffset? endDate = null)
     {
